@@ -54,17 +54,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, featured = fa
     }`}>
       
       {/* Top badges: Mandi arrival status & discount */}
-      <div className="absolute top-2.5 left-2.5 right-2.5 z-10 flex items-center justify-between pointer-events-none">
+      <div className="absolute top-2 left-2 right-2 z-10 flex items-start justify-between pointer-events-none gap-1">
         {product.discountPercent > 0 ? (
-          <span className="px-2.5 py-1 text-xs font-black uppercase tracking-wider bg-accent-400 text-brand-950 rounded-lg shadow-sm">
+          <span className="px-2 py-0.5 text-[10px] sm:text-xs font-black uppercase tracking-wider bg-accent-400 text-brand-950 rounded-lg shadow-sm shrink-0">
             {product.discountPercent}% OFF
           </span>
         ) : <span />}
 
         {product.mandiFreshBadge && (
-          <span className="px-2.5 py-1 text-xs font-bold bg-white/95 backdrop-blur-sm text-brand-800 border border-brand-200/80 rounded-lg shadow-xs flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            {product.mandiFreshBadge}
+          <span className="hidden sm:inline-flex px-2 py-0.5 text-[10px] sm:text-xs font-bold bg-white/95 backdrop-blur-sm text-brand-800 border border-brand-200/80 rounded-lg shadow-xs items-center gap-1 shrink-0 truncate max-w-[110px]">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+            <span className="truncate">{product.mandiFreshBadge}</span>
           </span>
         )}
       </div>
@@ -81,38 +81,38 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, featured = fa
           loading="lazy"
         />
         {/* Mandi arrival badge at image bottom */}
-        <div className="absolute bottom-2 left-2.5 bg-brand-950/80 backdrop-blur-md text-white text-xs font-medium px-2.5 py-1 rounded-lg flex items-center gap-1.5">
-          <Clock className="w-3 h-3 text-accent-400" />
-          <span>{product.arrivalStatus}</span>
+        <div className="absolute bottom-1.5 left-2 bg-brand-950/80 backdrop-blur-md text-white text-[10px] sm:text-xs font-medium px-2 py-0.5 rounded-md flex items-center gap-1">
+          <Clock className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-accent-400 shrink-0" />
+          <span className="truncate">{product.arrivalStatus}</span>
         </div>
       </Link>
 
       {/* Content Section */}
-      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between">
+      <div className="p-2.5 sm:p-4 flex-1 flex flex-col justify-between">
         <div>
           {/* Bengali Name + Category */}
-          <div className="flex items-center justify-between text-xs sm:text-sm text-emerald-800 font-bold mb-1">
+          <div className="flex items-center justify-between text-[11px] sm:text-xs text-emerald-800 font-bold mb-0.5">
             <span className="truncate">{product.bengaliName || product.categoryLabel}</span>
-            <span className="text-xs text-gray-400 font-normal truncate max-w-[100px] ml-1">
+            <span className="text-[10px] text-gray-400 font-normal truncate max-w-[70px] sm:max-w-[100px] ml-1">
               {product.mandiSource.split(',')[0]}
             </span>
           </div>
 
           {/* Product Name */}
           <Link href={`/product/${product.id}`} className="block">
-            <h3 className="font-bold text-gray-900 text-sm sm:text-base line-clamp-2 leading-snug group-hover:text-brand-700 transition-colors">
+            <h3 className="font-bold text-gray-900 text-xs sm:text-sm md:text-base line-clamp-2 leading-snug group-hover:text-brand-700 transition-colors">
               {product.name}
             </h3>
           </Link>
 
           {/* Weight selection options */}
-          <div className="mt-2.5 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+          <div className="mt-1.5 sm:mt-2.5 flex items-center gap-1 overflow-x-auto no-scrollbar">
             {product.weightOptions && product.weightOptions.length > 1 ? (
               product.weightOptions.map((opt, idx) => (
                 <button
                   key={opt.weight}
                   onClick={() => setSelectedWeightIndex(idx)}
-                  className={`text-xs px-2.5 py-1 rounded-lg font-bold border transition-colors shrink-0 ${
+                  className={`text-[10px] sm:text-xs px-2 py-0.5 rounded-md sm:rounded-lg font-bold border transition-colors shrink-0 ${
                     selectedWeightIndex === idx
                       ? 'bg-brand-50 border-brand-500 text-brand-900'
                       : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-gray-300'
@@ -122,7 +122,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, featured = fa
                 </button>
               ))
             ) : (
-              <span className="text-xs sm:text-sm font-semibold text-gray-500">
+              <span className="text-[11px] sm:text-xs font-semibold text-gray-500">
                 {currentOption.weight}
               </span>
             )}
@@ -130,19 +130,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, featured = fa
         </div>
 
         {/* Price & Quantity Stepper / Add Button */}
-        <div className="mt-3.5 sm:mt-4 pt-2.5 border-t border-gray-100 flex items-center justify-between gap-2">
-          {/* Price */}
-          <div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-base sm:text-lg font-black text-gray-900">
-                ₹{currentOption.price}
+        <div className="mt-2.5 sm:mt-4 pt-2 border-t border-gray-100 flex items-center justify-between gap-1 sm:gap-2">
+          {/* Price: stacked on mobile, inline on tablet+ */}
+          <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-1.5 min-w-0">
+            <span className="text-sm sm:text-base lg:text-lg font-black text-gray-900 leading-tight">
+              ₹{currentOption.price}
+            </span>
+            {currentOption.originalPrice > currentOption.price && (
+              <span className="text-[10px] sm:text-xs text-gray-400 line-through leading-tight">
+                ₹{currentOption.originalPrice}
               </span>
-              {currentOption.originalPrice > currentOption.price && (
-                <span className="text-xs sm:text-sm text-gray-400 line-through">
-                  ₹{currentOption.originalPrice}
-                </span>
-              )}
-            </div>
+            )}
           </div>
 
           {/* Stepper / Add Button (Blinkit style: turns into - 1 +) */}
@@ -151,33 +149,33 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, featured = fa
               <button
                 type="button"
                 onClick={handleAdd}
-                className="h-9 sm:h-10 px-4 sm:px-5 rounded-xl font-black text-xs sm:text-sm bg-emerald-50 hover:bg-accent-400 text-brand-800 hover:text-brand-950 border border-brand-300 hover:border-accent-500 flex items-center justify-center gap-1 shadow-2xs hover:scale-105 active:scale-95 transition-all duration-150"
+                className="h-8 sm:h-9 px-2.5 sm:px-4 rounded-xl font-black text-xs sm:text-sm bg-emerald-50 hover:bg-accent-400 text-brand-800 hover:text-brand-950 border border-brand-300 hover:border-accent-500 flex items-center justify-center gap-1 shadow-2xs hover:scale-105 active:scale-95 transition-all duration-150"
               >
-                <Plus className="w-4 h-4 text-brand-700" />
+                <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-700" />
                 <span>ADD</span>
               </button>
             ) : (
-              <div className={`h-9 sm:h-10 px-2 bg-brand-600 text-white rounded-xl flex items-center justify-between gap-2 shadow-sm transition-all ${
+              <div className={`h-8 sm:h-9 px-1.5 sm:px-2 bg-brand-600 text-white rounded-xl flex items-center justify-between gap-1 sm:gap-1.5 shadow-sm transition-all ${
                 justAdded ? 'animate-bounce-short scale-105' : ''
               }`}>
                 <button
                   type="button"
                   onClick={handleDecrement}
-                  className="w-7 h-7 rounded-lg bg-brand-700/80 hover:bg-brand-800 flex items-center justify-center text-white transition-colors"
+                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-brand-700/80 hover:bg-brand-800 flex items-center justify-center text-white transition-colors"
                   aria-label="Decrease quantity"
                 >
-                  <Minus className="w-3.5 h-3.5" />
+                  <Minus className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 </button>
-                <span className="font-black text-sm sm:text-base px-1.5 min-w-[18px] text-center">
+                <span className="font-black text-xs sm:text-sm px-1 min-w-[14px] sm:min-w-[18px] text-center">
                   {quantity}
                 </span>
                 <button
                   type="button"
                   onClick={handleIncrement}
-                  className="w-7 h-7 rounded-lg bg-brand-700/80 hover:bg-brand-800 flex items-center justify-center text-white transition-colors"
+                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-brand-700/80 hover:bg-brand-800 flex items-center justify-center text-white transition-colors"
                   aria-label="Increase quantity"
                 >
-                  <Plus className="w-3.5 h-3.5" />
+                  <Plus className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 </button>
               </div>
             )}

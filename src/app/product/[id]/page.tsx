@@ -97,10 +97,10 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto py-6 sm:py-10">
+    <div className="w-full px-3 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto py-5 sm:py-10 pb-28 sm:pb-16">
       
       {/* Breadcrumbs */}
-      <nav className="flex items-center gap-2 text-xs sm:text-sm font-bold text-gray-500 mb-6 overflow-x-auto no-scrollbar">
+      <nav className="flex items-center gap-2 text-xs sm:text-sm font-bold text-gray-500 mb-4 sm:mb-6 overflow-x-auto no-scrollbar">
         <Link href="/" className="hover:text-brand-700">Home</Link>
         <ChevronRight className="w-4 h-4 text-gray-400" />
         <Link href="/shop" className="hover:text-brand-700">Mandi Shop</Link>
@@ -113,11 +113,11 @@ export default function ProductDetailPage() {
       </nav>
 
       {/* Main Product Showcase Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 bg-white p-6 sm:p-10 rounded-3xl border border-gray-100 shadow-sm">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 bg-white p-4 sm:p-10 rounded-2xl sm:rounded-3xl border border-gray-100 shadow-sm">
         
         {/* Left Column: Image and Badges */}
         <div className="lg:col-span-6 space-y-4">
-          <div className="relative aspect-[4/3] sm:aspect-square w-full rounded-3xl overflow-hidden bg-gray-50 border border-gray-100 shadow-inner">
+          <div className="relative aspect-[4/3] sm:aspect-square w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-gray-50 border border-gray-100 shadow-inner">
             <Image
               src={imgSrc || product.image}
               alt={product.name}
@@ -130,7 +130,7 @@ export default function ProductDetailPage() {
 
             {/* Discount Badge */}
             {product.discountPercent > 0 && (
-              <span className="absolute top-4 left-4 px-3.5 py-1.5 bg-accent-400 text-brand-950 font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-md">
+              <span className="absolute top-3 left-3 sm:top-4 sm:left-4 px-2.5 sm:px-3.5 py-1 sm:py-1.5 bg-accent-400 text-brand-950 font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-md">
                 {product.discountPercent}% OFF
               </span>
             )}
@@ -138,21 +138,21 @@ export default function ProductDetailPage() {
             {/* Share button */}
             <button
               onClick={handleShare}
-              className="absolute top-4 right-4 p-3 bg-white/90 backdrop-blur-md rounded-2xl text-gray-700 hover:text-brand-700 hover:bg-white shadow-md transition-colors"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2.5 sm:p-3 bg-white/90 backdrop-blur-md rounded-xl sm:rounded-2xl text-gray-700 hover:text-brand-700 hover:bg-white shadow-md transition-colors"
               title="Share product"
             >
               {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
             </button>
 
             {/* Mandi Arrival Timestamp Overlay */}
-            <div className="absolute bottom-4 left-4 right-4 bg-brand-950/90 backdrop-blur-md text-white p-3.5 rounded-2xl border border-white/10 flex items-center justify-between">
-              <div className="flex items-center gap-2.5 text-xs sm:text-sm">
-                <Clock className="w-4 h-4 text-accent-400 shrink-0" />
-                <span>
-                  Sourced at <strong className="text-white font-black">{product.arrivalStatus}</strong> from <strong className="text-white font-black">{product.mandiSource}</strong>
+            <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 bg-brand-950/90 backdrop-blur-md text-white p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border border-white/10 flex flex-col xs:flex-row items-start xs:items-center justify-between gap-1.5">
+              <div className="flex items-center gap-2 text-xs sm:text-sm min-w-0">
+                <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent-400 shrink-0" />
+                <span className="truncate">
+                  Sourced <strong className="text-white font-black">{product.arrivalStatus}</strong> from <strong className="text-white font-black">{product.mandiSource.split(',')[0]}</strong>
                 </span>
               </div>
-              <span className="text-xs font-black uppercase px-2.5 py-1 bg-emerald-500/30 text-emerald-300 border border-emerald-500/50 rounded-lg shrink-0">
+              <span className="text-[10px] sm:text-xs font-black uppercase px-2 py-0.5 sm:px-2.5 sm:py-1 bg-emerald-500/30 text-emerald-300 border border-emerald-500/50 rounded-lg shrink-0">
                 Zero Storage
               </span>
             </div>

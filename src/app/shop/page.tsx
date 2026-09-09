@@ -116,20 +116,20 @@ function ShopContent() {
     sortBy !== 'popular';
 
   return (
-    <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto py-6 sm:py-10">
+    <div className="w-full px-3 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto py-5 sm:py-10 pb-28 sm:pb-16">
       
       {/* Page Heading & Search */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-gray-200">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 pb-4 sm:pb-6 border-b border-gray-200">
         <div>
-          <div className="flex items-center gap-3">
-            <h1 className="text-2xl sm:text-4xl font-black text-gray-900 tracking-tight">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <h1 className="text-xl sm:text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">
               Mandi Produce Catalog
             </h1>
-            <span className="text-xs sm:text-sm font-bold px-3 py-1 bg-brand-100 text-brand-800 rounded-full">
+            <span className="text-[10px] sm:text-sm font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 bg-brand-100 text-brand-800 rounded-full">
               {filteredProducts.length} items
             </span>
           </div>
-          <p className="text-sm sm:text-base text-gray-500 mt-1">
+          <p className="text-xs sm:text-base text-gray-500 mt-0.5 sm:mt-1">
             Hand-picked daily from Sealdah Koley & Mechua wholesale markets
           </p>
         </div>

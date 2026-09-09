@@ -10,24 +10,24 @@ import {
 
 export default function AboutPage() {
   return (
-    <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto py-8 sm:py-16 space-y-16 sm:space-y-24">
+    <div className="w-full px-3 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto py-6 sm:py-16 space-y-12 sm:space-y-24 pb-28 sm:pb-16">
       
       {/* Hero Mission Statement */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-brand-100 text-brand-900 font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl">
+      <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 bg-brand-100 text-brand-900 font-black text-[11px] sm:text-sm uppercase tracking-wider rounded-xl">
           <Sunrise className="w-4 h-4 text-accent-600" />
           <span>The CALWAY Philosophy</span>
         </div>
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight leading-tight">
+        <h1 className="text-2xl sm:text-4xl lg:text-6xl font-black text-gray-900 tracking-tight leading-tight">
           Picked at Dawn. At Your Door Before Breakfast.
         </h1>
-        <p className="text-base sm:text-lg lg:text-xl text-gray-700 leading-relaxed font-normal">
+        <p className="text-sm sm:text-lg lg:text-xl text-gray-700 leading-relaxed font-normal">
           We founded CALWAY with one rebellious idea: Kolkata&apos;s vegetables should never sit in a cold storage warehouse. They should travel from the farmer&apos;s midnight harvest to your kitchen pan within six hours.
         </p>
       </div>
 
       {/* Founders Story Card */}
-      <div className="bg-white rounded-3xl p-8 sm:p-12 border border-gray-100 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-12 border border-gray-100 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
         <div className="lg:col-span-6 relative aspect-[4/3] rounded-3xl overflow-hidden shadow-inner">
           <Image
             src="https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?auto=format&fit=crop&w=1000&q=80"

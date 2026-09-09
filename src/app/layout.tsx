@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { LocationProvider } from "@/context/LocationContext";
@@ -7,6 +7,13 @@ import { Footer } from "@/components/common/Footer";
 import { MobileNav } from "@/components/common/MobileNav";
 import { StickyCartBar } from "@/components/common/StickyCartBar";
 import { LocationModal } from "@/components/common/LocationModal";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#15803d",
+};
 
 export const metadata: Metadata = {
   title: "CALWAY — Mandi-Fresh Vegetable Delivery in Kolkata | Dawn Doorstep Run",

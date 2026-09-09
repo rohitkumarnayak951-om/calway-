@@ -58,7 +58,7 @@ export default function HomePage() {
   }, [products, selectedCategory, sortBy]);
 
   return (
-    <div className="space-y-4 sm:space-y-8 pb-16">
+    <div className="space-y-3 sm:space-y-8 pb-28 sm:pb-16 w-full max-w-full overflow-hidden">
       
       {/* 1. Hero Promotional Banner Carousel with Dawn Countdown */}
       <HeroBanner />
@@ -76,19 +76,19 @@ export default function HomePage() {
       {products.length > 0 && <MandiSpecials products={products} />}
 
       {/* 5. Full Product Catalog with Filter & Sort Controls */}
-      <section className="py-8 bg-white" id="catalog">
-        <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto">
+      <section className="py-6 sm:py-8 bg-white" id="catalog">
+        <div className="w-full px-3 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto">
           
           {/* Controls Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-gray-100">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-4 sm:pb-6 border-b border-gray-100">
             <div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 tracking-tight flex items-center gap-3">
+              <h2 className="text-xl sm:text-3xl lg:text-4xl font-black text-gray-900 tracking-tight flex items-center gap-2 sm:gap-3">
                 <span>All Mandi Fresh Vegetables</span>
-                <span className="text-xs sm:text-sm font-extrabold px-3 py-1 bg-brand-100 text-brand-800 rounded-full">
+                <span className="text-[10px] sm:text-sm font-extrabold px-2.5 sm:px-3 py-0.5 sm:py-1 bg-brand-100 text-brand-800 rounded-full">
                   {filteredProducts.length} items
                 </span>
               </h2>
-              <p className="text-sm sm:text-base text-gray-500 mt-1">
+              <p className="text-xs sm:text-base text-gray-500 mt-0.5 sm:mt-1">
                 Prices updated directly from 4:00 AM wholesale auction rates
               </p>
             </div>

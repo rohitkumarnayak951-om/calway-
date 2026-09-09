@@ -46,30 +46,30 @@ const steps = [
 
 export const HowItWorks: React.FC = () => {
   return (
-    <section className="py-12 bg-white border-y border-gray-100">
-      <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto">
+    <section className="py-7 sm:py-12 bg-white border-y border-gray-100 overflow-hidden w-full max-w-full">
+      <div className="w-full px-3 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-brand-100 text-brand-900 font-extrabold text-xs sm:text-sm uppercase tracking-wider rounded-xl mb-3">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 bg-brand-100 text-brand-900 font-extrabold text-[11px] sm:text-sm uppercase tracking-wider rounded-xl mb-2 sm:mb-3">
             <span>🌅 The Mandi-To-Kitchen Journey</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-gray-900 tracking-tight">
+          <h2 className="text-xl sm:text-4xl lg:text-5xl font-black text-gray-900 tracking-tight">
             How Calway delivers fresher than your local market
           </h2>
-          <p className="text-base sm:text-lg text-gray-600 mt-3 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-lg text-gray-600 mt-2 sm:mt-3 max-w-2xl mx-auto leading-relaxed">
             Most supermarket vegetables spend 3–4 days in refrigerated storage. We cut out the storage completely — farm-to-mandi-to-door in under 6 hours.
           </p>
         </div>
 
         {/* 4-Step Process Strip */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 relative">
           {steps.map((item) => {
             const Icon = item.icon;
             return (
               <div
                 key={item.step}
-                className="relative bg-white rounded-3xl p-6 sm:p-7 border border-gray-100 shadow-sm hover:shadow-md transition-all group flex flex-col justify-between"
+                className="relative bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-gray-100 shadow-sm hover:shadow-md transition-all group flex flex-col justify-between"
               >
                 {/* Step number watermark */}
                 <div className="text-4xl font-black text-gray-100 absolute top-4 right-5 select-none">

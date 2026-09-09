@@ -55,18 +55,18 @@ export default function SubscriptionsPage() {
   };
 
   return (
-    <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto py-8 sm:py-14 space-y-16">
+    <div className="w-full px-3 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto py-6 sm:py-14 space-y-10 sm:space-y-16 pb-28 sm:pb-16">
       
       {/* Page Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-brand-100 text-brand-900 font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl">
+      <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 bg-brand-100 text-brand-900 font-black text-[11px] sm:text-sm uppercase tracking-wider rounded-xl">
           <Calendar className="w-4 h-4 text-brand-700" />
           <span>Automate Your Morning Kitchen</span>
         </div>
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight leading-tight">
+        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-gray-900 tracking-tight leading-tight">
           Mandi-Fresh Morning Baskets, Delivered on Autopilot
         </h1>
-        <p className="text-base sm:text-lg text-gray-700 leading-relaxed max-w-2xl mx-auto">
+        <p className="text-xs sm:text-lg text-gray-700 leading-relaxed max-w-2xl mx-auto">
           Skip crowded morning markets and limp supermarket cold-storage produce. Get farm-fresh seasonal vegetables hand-picked at 3:30 AM and placed at your door before 7:00 AM.
         </p>
 

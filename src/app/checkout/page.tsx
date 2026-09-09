@@ -91,39 +91,39 @@ function CheckoutContent() {
   }
 
   return (
-    <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto py-6 sm:py-10">
+    <div className="w-full px-3 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto py-5 sm:py-10 pb-28 sm:pb-16">
       
       {/* Checkout Step Header */}
-      <div className="flex items-center gap-3.5 pb-6 border-b border-gray-200 mb-8">
+      <div className="flex items-center gap-3 pb-4 sm:pb-6 border-b border-gray-200 mb-6 sm:mb-8">
         <Link
           href="/cart"
-          className="p-2.5 bg-white hover:bg-gray-100 rounded-xl border border-gray-200 text-gray-600 transition-colors shrink-0"
+          className="p-2 sm:p-2.5 bg-white hover:bg-gray-100 rounded-xl border border-gray-200 text-gray-600 transition-colors shrink-0"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
         </Link>
         <div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 tracking-tight">
+          <h1 className="text-xl sm:text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">
             Checkout & Morning Delivery Setup
           </h1>
-          <p className="text-sm sm:text-base text-gray-600 font-medium mt-1">
+          <p className="text-xs sm:text-base text-gray-600 font-medium mt-0.5">
             Dawn delivery to your Kolkata doorstep tomorrow
           </p>
         </div>
       </div>
 
-      <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
         
         {/* Left Col: Address, Slot, & Payment Form */}
-        <div className="lg:col-span-8 space-y-6">
+        <div className="lg:col-span-8 space-y-5 sm:space-y-6">
           
           {/* 1. Kolkata Delivery Address */}
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-sm space-y-5">
-            <div className="flex items-center justify-between pb-4 border-b border-gray-100">
-              <h2 className="text-lg sm:text-xl font-black text-gray-900 flex items-center gap-2.5">
-                <MapPin className="w-5 h-5 text-brand-600" />
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-gray-100 shadow-sm space-y-4 sm:space-y-5">
+            <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-gray-100">
+              <h2 className="text-base sm:text-xl font-black text-gray-900 flex items-center gap-2">
+                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-brand-600" />
                 <span>1. Kolkata Delivery Address</span>
               </h2>
-              <span className="text-xs sm:text-sm font-black text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">
+              <span className="text-[10px] sm:text-sm font-black text-emerald-800 bg-emerald-100 px-2.5 py-0.5 sm:py-1 rounded-full">
                 Dawn Sourced Hub
               </span>
             </div>
