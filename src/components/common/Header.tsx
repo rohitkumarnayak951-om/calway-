@@ -1,0 +1,285 @@
+'use client';
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { 
+  MapPin, 
+  Search, 
+  ShoppingBag, 
+  User, 
+  ChevronDown, 
+  Clock, 
+  Sparkles, 
+  X,
+  CheckCircle2
+} from 'lucide-react';
+import { useCart } from '@/context/CartContext';
+import { useLocation } from '@/context/LocationContext';
+import { SearchModal } from './SearchModal';
+
+export const Header: React.FC = () => {
+  const pathname = usePathname();
+  const { totalItemsCount, subtotal } = useCart();
+  const { selectedLocation, openModal: openLocationModal, deliveryPromiseText, orderCutoffText } = useLocation();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authPhone, setAuthPhone] = useState('');
+  const [authSuccess, setAuthSuccess] = useState(false);
+
+  const handleMockLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (authPhone.length >= 10) {
+      setAuthSuccess(true);
+      setTimeout(() => {
+        setIsAuthModalOpen(false);
+        setAuthSuccess(false);
+      }, 1500);
+    }
+  };
+
+  return (
+    <>
+      {/* Top Banner: Dawn Mandi Delivery Promise */}
+      <div className="bg-gradient-to-r from-brand-900 via-brand-800 to-brand-900 text-white text-xs sm:text-sm py-2.5 px-4 sm:px-8 lg:px-12 xl:px-16 shadow-sm border-b border-brand-700/50">
+        <div className="w-full flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 font-medium tracking-wide">
+            <span className="flex h-2.5 w-2.5 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent-400"></span>
+            </span>
+            <Clock className="w-4 h-4 text-accent-400 shrink-0" />
+            <span className="hidden sm:inline font-black text-accent-300">Kolkata Dawn Mandi Run:</span>
+            <span className="truncate font-semibold">{deliveryPromiseText}</span>
+          </div>
+          
+          <div className="hidden md:flex items-center gap-4 text-brand-200 text-xs sm:text-sm">
+            <span className="flex items-center gap-1 font-semibold">
+              <Sparkles className="w-3.5 h-3.5 text-accent-400" /> 100% Zero Cold Storage
+            </span>
+            <span className="text-brand-500">•</span>
+            <span className="font-semibold">{orderCutoffText}</span>
+            <span className="text-brand-500">•</span>
+            <Link href="/subscriptions" className="text-accent-300 hover:text-white font-bold underline underline-offset-2">
+              Subscribe & Save 18%
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Sticky Header */}
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all">
+        <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+          <div className="flex items-center justify-between h-18 sm:h-22 gap-3 sm:gap-6">
+            
+            {/* Logo + Mandi Tagline */}
+            <div className="flex items-center gap-4 shrink-0">
+              <Link href="/" className="flex items-center gap-2.5 group">
+                <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                  <span className="text-2xl sm:text-3xl">🥬</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-2xl sm:text-3xl font-black tracking-tight text-brand-900 leading-none">
+                    CAL<span className="text-brand-600">WAY</span>
+                  </span>
+                  <span className="text-xs font-black uppercase tracking-wider text-emerald-800 mt-1">
+                    Mandi-Fresh • Kolkata
+                  </span>
+                </div>
+              </Link>
+
+              {/* Location Selector (Blinkit style) */}
+              <button
+                onClick={openLocationModal}
+                className="hidden lg:flex items-center gap-2.5 text-left px-3.5 py-2 rounded-2xl bg-brand-50 hover:bg-brand-100 border border-brand-200/70 transition-all max-w-[220px]"
+                title="Change Kolkata delivery locality"
+              >
+                <div className="p-1.5 rounded-xl bg-brand-600 text-white shrink-0">
+                  <MapPin className="w-4 h-4" />
+                </div>
+                <div className="truncate">
+                  <div className="text-xs font-bold text-emerald-900 uppercase leading-none">Delivering to</div>
+                  <div className="text-sm font-extrabold text-gray-900 truncate leading-tight mt-1 flex items-center gap-1">
+                    <span className="truncate">{selectedLocation.name.split('(')[0].trim()}</span>
+                    <ChevronDown className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            {/* Big Rounded Search Bar (Blinkit style) */}
+            <div className="flex-1 max-w-2xl 2xl:max-w-3xl">
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen(true)}
+                className="w-full h-12 sm:h-14 pl-4 pr-3 bg-gray-50 hover:bg-gray-100/90 border border-gray-200 focus:border-brand-500 rounded-2xl flex items-center justify-between text-left transition-all shadow-inner group"
+              >
+                <div className="flex items-center gap-3 text-gray-400 group-hover:text-gray-600 truncate">
+                  <Search className="w-5 h-5 text-brand-600 shrink-0" />
+                  <span className="text-sm sm:text-base truncate text-gray-500 font-medium">
+                    Search for <span className="font-bold text-gray-800">&ldquo;tomatoes, spinach, shukto kit...&rdquo;</span>
+                  </span>
+                </div>
+                <kbd className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm">
+                  /
+                </kbd>
+              </button>
+            </div>
+
+            {/* Right Nav Actions */}
+            <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+              {/* Desktop Nav Links */}
+              <nav className="hidden xl:flex items-center gap-1.5 mr-2 text-sm sm:text-base font-bold">
+                <Link
+                  href="/shop"
+                  className={`px-3.5 py-2 rounded-xl transition-colors ${
+                    pathname === '/shop'
+                      ? 'bg-brand-100 text-brand-900 font-extrabold'
+                      : 'text-gray-700 hover:text-brand-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Shop Mandi
+                </Link>
+                <Link
+                  href="/subscriptions"
+                  className={`px-3.5 py-2 rounded-xl transition-colors ${
+                    pathname === '/subscriptions'
+                      ? 'bg-brand-100 text-brand-900 font-extrabold'
+                      : 'text-gray-700 hover:text-brand-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Subscriptions
+                </Link>
+                <Link
+                  href="/about"
+                  className={`px-3.5 py-2 rounded-xl transition-colors ${
+                    pathname === '/about'
+                      ? 'bg-brand-100 text-brand-900 font-extrabold'
+                      : 'text-gray-700 hover:text-brand-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Our Dawn Story
+                </Link>
+              </nav>
+
+              {/* Mobile location button (compact) */}
+              <button
+                onClick={openLocationModal}
+                className="lg:hidden p-2.5 text-brand-800 hover:bg-brand-50 rounded-xl transition-colors"
+                aria-label="Change location"
+              >
+                <MapPin className="w-5 h-5 text-brand-600" />
+              </button>
+
+              {/* User / Login Trigger */}
+              <button
+                onClick={() => setIsAuthModalOpen(true)}
+                className="hidden sm:flex items-center gap-1.5 px-4 py-2.5 text-sm font-bold text-gray-700 hover:text-brand-800 hover:bg-brand-50 rounded-2xl border border-gray-200 hover:border-brand-200 transition-all"
+              >
+                <User className="w-4 h-4 text-brand-600" />
+                <span>Sign In</span>
+              </button>
+
+              {/* Cart Button (Blinkit style with item count + total) */}
+              <Link
+                href="/cart"
+                className="relative flex items-center gap-2.5 sm:gap-3.5 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white shadow-md shadow-brand-600/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <div className="relative">
+                  <ShoppingBag className="w-5 h-5 text-accent-300" />
+                  {totalItemsCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-accent-400 text-brand-950 font-black text-xs w-5 h-5 rounded-full flex items-center justify-center shadow-sm animate-bounce-short">
+                      {totalItemsCount}
+                    </span>
+                  )}
+                </div>
+                <div className="hidden sm:flex flex-col text-left">
+                  <span className="text-xs font-semibold text-brand-100 uppercase tracking-wider leading-none">
+                    {totalItemsCount === 0 ? 'My Cart' : `${totalItemsCount} items`}
+                  </span>
+                  <span className="text-sm sm:text-base font-black text-white leading-tight mt-1">
+                    {totalItemsCount === 0 ? 'Empty' : `₹${subtotal}`}
+                  </span>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Global Search Modal */}
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+
+      {/* Mock Authentication Modal */}
+      {isAuthModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div 
+            className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 sm:p-8 border border-brand-100"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setIsAuthModalOpen(false)}
+              className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="text-center mt-2">
+              <div className="w-14 h-14 rounded-2xl bg-brand-100 text-brand-700 flex items-center justify-center mx-auto mb-3 text-3xl">
+                🥬
+              </div>
+              <h3 className="text-2xl font-black text-brand-950">Welcome to CALWAY</h3>
+              <p className="text-sm text-gray-500 mt-1">
+                Enter your mobile number to track dawn orders and manage morning deliveries
+              </p>
+            </div>
+
+            {authSuccess ? (
+              <div className="my-8 text-center py-5 bg-brand-50 rounded-2xl border border-brand-200 animate-in zoom-in-95">
+                <CheckCircle2 className="w-12 h-12 text-brand-600 mx-auto mb-2" />
+                <h4 className="font-bold text-brand-900 text-base">Welcome back to CALWAY!</h4>
+                <p className="text-sm text-brand-700 mt-0.5">Signed in as +91 {authPhone}</p>
+              </div>
+            ) : (
+              <form onSubmit={handleMockLogin} className="mt-6 space-y-4">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-1.5 uppercase tracking-wider">
+                    Mobile Number
+                  </label>
+                  <div className="relative flex items-center">
+                    <span className="absolute left-3.5 text-sm font-bold text-gray-500 border-r border-gray-200 pr-2">
+                      +91
+                    </span>
+                    <input
+                      type="tel"
+                      pattern="[0-9]{10}"
+                      maxLength={10}
+                      required
+                      placeholder="98300 12345"
+                      value={authPhone}
+                      onChange={(e) => setAuthPhone(e.target.value.replace(/\D/g, ''))}
+                      className="w-full pl-16 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-base font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white"
+                      autoFocus
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={authPhone.length < 10}
+                  className="w-full py-4 bg-brand-600 hover:bg-brand-700 disabled:opacity-50 text-white font-black text-base rounded-2xl shadow-md shadow-brand-600/30 transition-all hover:scale-[1.01]"
+                >
+                  Send OTP & Continue
+                </button>
+
+                <p className="text-xs text-gray-400 text-center leading-relaxed">
+                  By continuing, you agree to Calway&apos;s Terms of Morning Delivery and Freshness Promise.
+                </p>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+    </>
+  );
+};

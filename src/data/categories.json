@@ -1,0 +1,56 @@
+[
+  {
+    "id": "cat-leafy",
+    "slug": "leafy-greens",
+    "name": "Leafy Greens (Shaak)",
+    "bengaliName": "টাটকা শাক",
+    "icon": "🥬",
+    "itemCount": 6,
+    "bgColor": "bg-emerald-50 text-emerald-800 border-emerald-200"
+  },
+  {
+    "id": "cat-daily",
+    "slug": "daily-essentials",
+    "name": "Daily Essentials",
+    "bengaliName": "নিত্যদিনের সবজি",
+    "icon": "🥔",
+    "itemCount": 7,
+    "bgColor": "bg-amber-50 text-amber-800 border-amber-200"
+  },
+  {
+    "id": "cat-kolkata",
+    "slug": "kolkata-specials",
+    "name": "Kolkata Mandi Specials",
+    "bengaliName": "কলকাতার স্পেশাল",
+    "icon": "🌶️",
+    "itemCount": 6,
+    "bgColor": "bg-green-50 text-green-800 border-green-200"
+  },
+  {
+    "id": "cat-root",
+    "slug": "root-vegetables",
+    "name": "Root Vegetables",
+    "bengaliName": "মূলজাতীয় সবজি",
+    "icon": "🥕",
+    "itemCount": 5,
+    "bgColor": "bg-orange-50 text-orange-800 border-orange-200"
+  },
+  {
+    "id": "cat-exotics",
+    "slug": "exotics-salads",
+    "name": "Exotic & Salad Greens",
+    "bengaliName": "স্যালাড ও এক্সোটিক",
+    "icon": "🥦",
+    "itemCount": 5,
+    "bgColor": "bg-teal-50 text-teal-800 border-teal-200"
+  },
+  {
+    "id": "cat-combos",
+    "slug": "combos-kits",
+    "name": "Mandi Combos & Kits",
+    "bengaliName": "রান্নার রেডি কিট",
+    "icon": "🧺",
+    "itemCount": 4,
+    "bgColor": "bg-lime-50 text-lime-800 border-lime-200"
+  }
+]

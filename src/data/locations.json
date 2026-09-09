@@ -1,0 +1,82 @@
+[
+  {
+    "id": "loc-saltlake",
+    "name": "Salt Lake (Sector 1 - 5)",
+    "zone": "East",
+    "pincode": "700091",
+    "mandiHub": "Koley Mandi Hub",
+    "isAvailable": true
+  },
+  {
+    "id": "loc-newtown",
+    "name": "New Town (Action Area I, II, III)",
+    "zone": "East",
+    "pincode": "700156",
+    "mandiHub": "Rajarhat Mandi Hub",
+    "isAvailable": true
+  },
+  {
+    "id": "loc-ballygunge",
+    "name": "Ballygunge & Dover Road",
+    "zone": "South",
+    "pincode": "700019",
+    "mandiHub": "Sealdah Mandi Hub",
+    "isAvailable": true
+  },
+  {
+    "id": "loc-gariahata",
+    "name": "Gariahat & Golpark",
+    "zone": "South",
+    "pincode": "700029",
+    "mandiHub": "Sealdah Mandi Hub",
+    "isAvailable": true
+  },
+  {
+    "id": "loc-alipore",
+    "name": "Alipore & New Alipore",
+    "zone": "South",
+    "pincode": "700027",
+    "mandiHub": "Mechua Mandi Hub",
+    "isAvailable": true
+  },
+  {
+    "id": "loc-jadavpur",
+    "name": "Jadavpur & Santoshpur",
+    "zone": "South",
+    "pincode": "700032",
+    "mandiHub": "Garia Mandi Hub",
+    "isAvailable": true
+  },
+  {
+    "id": "loc-behala",
+    "name": "Behala & Taratala",
+    "zone": "West",
+    "pincode": "700034",
+    "mandiHub": "Taratala Mandi Hub",
+    "isAvailable": true
+  },
+  {
+    "id": "loc-dumdum",
+    "name": "Dum Dum & Nagerbazar",
+    "zone": "North",
+    "pincode": "700028",
+    "mandiHub": "Koley Mandi Hub",
+    "isAvailable": true
+  },
+  {
+    "id": "loc-shyambazar",
+    "name": "Shyambazar & Hatibagan",
+    "zone": "North",
+    "pincode": "700004",
+    "mandiHub": "Koley Mandi Hub",
+    "isAvailable": true
+  },
+  {
+    "id": "loc-howrah",
+    "name": "Howrah (Shibpur & Mandirtala)",
+    "zone": "West",
+    "pincode": "700001",
+    "mandiHub": "Posta Wholesale Hub",
+    "isAvailable": true
+  }
+]
