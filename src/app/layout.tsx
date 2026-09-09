@@ -20,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="bg-[#f8faf8] text-[#0f291e] min-h-screen flex flex-col antialiased selection:bg-brand-200 selection:text-brand-900">
+    <html lang="en" className="w-full max-w-full overflow-x-hidden">
+      <body className="bg-[#f8faf8] text-[#0f291e] min-h-screen flex flex-col antialiased selection:bg-brand-200 selection:text-brand-900 w-full max-w-full overflow-x-hidden">
         <LocationProvider>
           <CartProvider>
             {/* Global Location Selection Modal */}
@@ -31,7 +31,7 @@ export default function RootLayout({
             <Header />
 
             {/* Main Content */}
-            <main className="flex-1">
+            <main className="flex-1 w-full max-w-full overflow-x-hidden">
               {children}
             </main>
 
