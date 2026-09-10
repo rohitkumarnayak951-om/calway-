@@ -79,56 +79,56 @@ export default function ContactPage() {
           href="https://wa.me/919830022592?text=Hi%20Calway%20team,%20I%20have%20a%20question%20about%20morning%20delivery"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-3xl p-6 sm:p-8 shadow-md transition-all hover:scale-[1.02] flex flex-col justify-between group"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-md transition-all hover:scale-[1.02] flex flex-col justify-between group"
         >
           <div>
-            <div className="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center text-white mb-5">
-              <MessageSquare className="w-7 h-7" />
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 flex items-center justify-center text-white mb-4 sm:mb-5">
+              <MessageSquare className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
-            <span className="text-xs font-black uppercase tracking-wider bg-white/20 px-3 py-1.5 rounded-xl">
+            <span className="text-[11px] sm:text-xs font-black uppercase tracking-wider bg-white/20 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl">
               ⚡ Instant Response
             </span>
-            <h3 className="text-2xl font-black mt-4">WhatsApp Care Concierge</h3>
-            <p className="text-sm text-emerald-100 mt-2 leading-relaxed">
+            <h3 className="text-xl sm:text-2xl font-black mt-3 sm:mt-4">WhatsApp Care Concierge</h3>
+            <p className="text-xs sm:text-sm text-emerald-100 mt-2 leading-relaxed">
               Fastest way to pause subscriptions, send quality photos, or update flat directions.
             </p>
           </div>
-          <div className="mt-8 pt-4 border-t border-white/20 font-black text-base sm:text-lg flex items-center justify-between">
+          <div className="mt-6 sm:mt-8 pt-3.5 sm:pt-4 border-t border-white/20 font-black text-sm sm:text-lg flex items-center justify-between">
             <span>Chat on WhatsApp</span>
             <span>&rarr;</span>
           </div>
         </a>
 
         {/* Helpline */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-sm flex flex-col justify-between">
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-gray-100 shadow-sm flex flex-col justify-between">
           <div>
-            <div className="w-14 h-14 rounded-2xl bg-brand-50 text-brand-700 flex items-center justify-center mb-5">
-              <Phone className="w-7 h-7" />
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-brand-50 text-brand-700 flex items-center justify-center mb-4 sm:mb-5">
+              <Phone className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
-            <span className="text-xs font-black text-gray-500 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-black text-gray-500 uppercase tracking-wider">
               Morning Helpline
             </span>
-            <h3 className="text-2xl font-black text-gray-900 mt-2">+91 98300 CALWAY</h3>
-            <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+            <h3 className="text-xl sm:text-2xl font-black text-gray-900 mt-2">+91 98300 CALWAY</h3>
+            <p className="text-xs sm:text-sm text-gray-600 mt-2 leading-relaxed">
               Available 5:30 AM – 10:30 PM daily. Direct line to our dispatch hub supervisor.
             </p>
           </div>
-          <div className="mt-8 pt-4 border-t border-gray-100 text-sm font-black text-brand-700 flex items-center gap-2">
+          <div className="mt-6 sm:mt-8 pt-3.5 sm:pt-4 border-t border-gray-100 text-xs sm:text-sm font-black text-brand-700 flex items-center gap-2">
             <Clock className="w-4 h-4" />
             <span>Active during morning drops</span>
           </div>
         </div>
 
         {/* Headquarters */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-sm flex flex-col justify-between">
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-gray-100 shadow-sm flex flex-col justify-between">
           <div>
-            <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center mb-5">
-              <MapPin className="w-7 h-7" />
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4 sm:mb-5">
+              <MapPin className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
-            <span className="text-xs font-black text-gray-500 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-black text-gray-500 uppercase tracking-wider">
               Central Mandi Hub
             </span>
-            <h3 className="text-2xl font-black text-gray-900 mt-2">Koley & Mechua Hubs</h3>
+            <h3 className="text-xl sm:text-2xl font-black text-gray-900 mt-2">Koley & Mechua Hubs</h3>
             <p className="text-sm text-gray-600 mt-2 leading-relaxed">
               Procurement Center: Sealdah Wholesale Market Complex, Kolkata 700014
             </p>

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Product } from '@/types';
 import { productService } from '@/services/productService';
+import productsData from '@/data/products.json';
 import { useCart } from '@/context/CartContext';
 import { useLocation } from '@/context/LocationContext';
 import { ProductCard } from '@/components/product/ProductCard';
@@ -28,16 +29,16 @@ export default function ProductDetailPage() {
   const { addItem, updateQuantity, getItemQuantity } = useCart();
   const { selectedLocation } = useLocation();
 
-  const [product, setProduct] = useState<Product | null>(null);
+  const initialProduct = (productsData as Product[]).find((p) => p.id === productId) || null;
+  const [product, setProduct] = useState<Product | null>(initialProduct);
   const [related, setRelated] = useState<Product[]>([]);
   const [selectedWeightIndex, setSelectedWeightIndex] = useState(0);
   const [copied, setCopied] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [imgSrc, setImgSrc] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [imgSrc, setImgSrc] = useState<string | null>(initialProduct?.image || null);
 
   useEffect(() => {
     async function load() {
-      setLoading(true);
       const item = await productService.getProductById(productId);
       if (item) {
         setProduct(item);
@@ -50,7 +51,7 @@ export default function ProductDetailPage() {
     if (productId) load();
   }, [productId]);
 
-  if (loading) {
+  if (loading && !product) {
     return (
       <div className="w-full px-4 sm:px-8 py-16 text-center">
         <div className="w-12 h-12 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
@@ -295,25 +296,26 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Action Row: Quantity Stepper & Add to Cart */}
-          <div className="pt-6 border-t border-gray-100 flex items-center gap-4">
+          <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
             {quantity === 0 ? (
               <button
                 onClick={() => addItem(product, currentOption.weight, currentOption.price)}
-                className="flex-1 py-4 sm:py-5 bg-accent-400 hover:bg-accent-300 text-brand-950 font-black text-sm sm:text-base lg:text-lg rounded-2xl shadow-lg shadow-accent-500/25 flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                className="w-full sm:flex-1 py-3.5 sm:py-5 min-h-[48px] bg-accent-400 hover:bg-accent-300 text-brand-950 font-black text-sm sm:text-base lg:text-lg rounded-2xl shadow-lg shadow-accent-500/25 flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99] text-center"
               >
                 <Plus className="w-5 h-5 sm:w-6 sm:h-6 text-brand-900" />
                 <span>ADD TO MORNING BASKET (₹{currentOption.price})</span>
               </button>
             ) : (
-              <div className="flex-1 flex items-center justify-between p-2.5 bg-brand-600 text-white rounded-2xl shadow-md">
-                <div className="flex items-center gap-3 pl-3">
-                  <span className="text-xs sm:text-sm font-bold text-brand-100">In Cart:</span>
+              <div className="w-full sm:flex-1 flex items-center justify-between p-2.5 min-h-[48px] bg-brand-600 text-white rounded-2xl shadow-md">
+                <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-3">
+                  <span className="text-xs sm:text-sm font-bold text-brand-100">In Basket:</span>
                   <span className="font-black text-sm sm:text-base text-white">{currentOption.weight}</span>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3">
                   <button
                     onClick={() => updateQuantity(product.id, quantity - 1, currentOption.weight)}
-                    className="w-10 h-10 rounded-xl bg-brand-700 hover:bg-brand-800 flex items-center justify-center text-white transition-colors"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-700 hover:bg-brand-800 flex items-center justify-center text-white transition-colors active:scale-95"
+                    aria-label="Decrease quantity"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
@@ -322,7 +324,8 @@ export default function ProductDetailPage() {
                   </span>
                   <button
                     onClick={() => updateQuantity(product.id, quantity + 1, currentOption.weight)}
-                    className="w-10 h-10 rounded-xl bg-brand-700 hover:bg-brand-800 flex items-center justify-center text-white transition-colors"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-700 hover:bg-brand-800 flex items-center justify-center text-white transition-colors active:scale-95"
+                    aria-label="Increase quantity"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
@@ -332,7 +335,7 @@ export default function ProductDetailPage() {
 
             <Link
               href="/cart"
-              className="px-6 py-4 sm:py-5 bg-brand-50 hover:bg-brand-100 text-brand-900 font-black text-sm sm:text-base rounded-2xl border border-brand-200 transition-colors shrink-0"
+              className="w-full sm:w-auto px-6 py-3.5 sm:py-5 min-h-[48px] bg-brand-50 hover:bg-brand-100 text-brand-900 font-black text-sm sm:text-base rounded-2xl border border-brand-200 transition-colors text-center flex items-center justify-center shrink-0"
             >
               Go to Cart
             </Link>

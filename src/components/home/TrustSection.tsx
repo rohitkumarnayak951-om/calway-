@@ -34,45 +34,45 @@ const trustCards = [
 
 export const TrustSection: React.FC = () => {
   return (
-    <section className="py-14 bg-gray-50/70 border-y border-gray-100">
-      <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto">
+    <section className="py-8 sm:py-14 bg-gray-50/70 border-y border-gray-100 overflow-hidden w-full max-w-full">
+      <div className="w-full px-3 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-12">
           <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-brand-700 bg-brand-100 px-3.5 py-1.5 rounded-xl">
             🛡️ The Calway Standard
           </span>
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-gray-900 tracking-tight mt-3">
+          <h2 className="text-xl sm:text-4xl lg:text-5xl font-black text-gray-900 tracking-tight mt-2.5 sm:mt-3">
             Why Kolkata households trust our morning dawn drops
           </h2>
-          <p className="text-sm sm:text-base lg:text-lg text-gray-600 mt-2.5 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-base lg:text-lg text-gray-600 mt-2 max-w-2xl mx-auto leading-relaxed">
             We operate on a simple philosophy: if we wouldn&apos;t cook it in our own family kitchen this morning, we won&apos;t deliver it to yours.
           </p>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Cards Grid: Swipeable horizontal carousel on mobile, 4-col grid on desktop */}
+        <div className="flex overflow-x-auto no-scrollbar snap-x snap-mandatory gap-3.5 pb-2 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 w-full max-w-full">
           {trustCards.map((card, idx) => {
             const Icon = card.icon;
             return (
               <div
                 key={idx}
-                className="bg-white rounded-3xl p-6 sm:p-7 border border-gray-100 shadow-sm hover:shadow-soft transition-all duration-300 flex flex-col justify-between"
+                className="w-[82vw] max-w-[300px] shrink-0 snap-center md:w-auto md:max-w-none md:shrink bg-white rounded-3xl p-5 sm:p-7 border border-gray-100 shadow-sm hover:shadow-soft transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-13 h-13 rounded-2xl bg-brand-50 text-brand-700 flex items-center justify-center mb-4 p-3">
-                    <Icon className="w-6 h-6" />
+                  <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl bg-brand-50 text-brand-700 flex items-center justify-center mb-3.5 sm:mb-4 p-2.5 sm:p-3">
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
-                  <h3 className="font-extrabold text-lg sm:text-xl text-gray-900 mb-2">
+                  <h3 className="font-extrabold text-base sm:text-xl text-gray-900 mb-1.5 sm:mb-2">
                     {card.title}
                   </h3>
-                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                  <p className="text-xs sm:text-base text-gray-600 leading-relaxed">
                     {card.desc}
                   </p>
                 </div>
                 
-                <div className="mt-5 pt-3.5 border-t border-gray-100">
-                  <span className={`inline-block text-xs sm:text-sm font-bold px-3 py-1 rounded-lg border bg-gradient-to-br ${card.color}`}>
+                <div className="mt-4 sm:mt-5 pt-3 border-t border-gray-100">
+                  <span className={`inline-block text-[11px] sm:text-sm font-bold px-2.5 sm:px-3 py-1 rounded-lg border bg-gradient-to-br ${card.color}`}>
                     {card.badge}
                   </span>
                 </div>

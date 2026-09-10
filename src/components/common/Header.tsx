@@ -41,7 +41,8 @@ export const Header: React.FC = () => {
   return (
     <>
       {/* Top Banner: Dawn Mandi Delivery Promise */}
-      <div className="bg-gradient-to-r from-brand-900 via-brand-800 to-brand-900 text-white text-xs sm:text-sm py-2 px-4 sm:px-6 lg:px-8 shadow-xs border-b border-brand-700/50 overflow-hidden w-full max-w-full">
+      {/* Desktop Banner (>=md) */}
+      <div className="hidden md:block bg-gradient-to-r from-brand-900 via-brand-800 to-brand-900 text-white text-xs sm:text-sm py-2 px-4 sm:px-6 lg:px-8 shadow-xs border-b border-brand-700/50 overflow-hidden w-full max-w-full">
         <div className="w-full flex items-center justify-between gap-3 overflow-hidden">
           <div className="flex items-center gap-2 font-medium tracking-wide truncate">
             <span className="flex h-2.5 w-2.5 relative shrink-0">
@@ -49,11 +50,11 @@ export const Header: React.FC = () => {
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent-400"></span>
             </span>
             <Clock className="w-4 h-4 text-accent-400 shrink-0" />
-            <span className="hidden sm:inline font-black text-accent-300 shrink-0">Kolkata Dawn Mandi Run:</span>
+            <span className="font-black text-accent-300 shrink-0">Kolkata Dawn Mandi Run:</span>
             <span className="truncate font-semibold">{deliveryPromiseText}</span>
           </div>
           
-          <div className="hidden lg:flex items-center gap-3 xl:gap-4 text-brand-200 text-xs shrink-0">
+          <div className="flex items-center gap-3 xl:gap-4 text-brand-200 text-xs shrink-0">
             <span className="flex items-center gap-1 font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-accent-400" /> 100% Zero Cold Storage
             </span>
@@ -64,6 +65,45 @@ export const Header: React.FC = () => {
               Subscribe & Save 18%
             </Link>
           </div>
+        </div>
+      </div>
+
+      {/* Mobile Auto-Scrolling Ticker (<md) - Never wraps, 1 continuous single line */}
+      <div className="md:hidden bg-gradient-to-r from-brand-950 via-brand-900 to-brand-950 text-white text-[11px] py-1.5 overflow-hidden w-full max-w-full border-b border-brand-800/80">
+        <div className="animate-marquee items-center gap-6 whitespace-nowrap">
+          <span className="flex items-center gap-1.5 font-bold text-accent-300">
+            <span className="flex h-2 w-2 relative shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-400"></span>
+            </span>
+            <span>Kolkata Dawn Mandi Run: {deliveryPromiseText}</span>
+          </span>
+          <span className="text-brand-400">•</span>
+          <span className="flex items-center gap-1 font-medium text-brand-100">
+            <Sparkles className="w-3 h-3 text-accent-400" /> 100% Zero Cold Storage
+          </span>
+          <span className="text-brand-400">•</span>
+          <span className="font-semibold text-accent-300">Order by 10 PM for 6:45 AM Drop</span>
+          <span className="text-brand-400">•</span>
+          <span className="font-bold text-white">Direct from Koley & Mechua</span>
+          <span className="text-brand-400">•</span>
+          {/* Duplicate set for seamless continuous marquee */}
+          <span className="flex items-center gap-1.5 font-bold text-accent-300">
+            <span className="flex h-2 w-2 relative shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-400"></span>
+            </span>
+            <span>Kolkata Dawn Mandi Run: {deliveryPromiseText}</span>
+          </span>
+          <span className="text-brand-400">•</span>
+          <span className="flex items-center gap-1 font-medium text-brand-100">
+            <Sparkles className="w-3 h-3 text-accent-400" /> 100% Zero Cold Storage
+          </span>
+          <span className="text-brand-400">•</span>
+          <span className="font-semibold text-accent-300">Order by 10 PM for 6:45 AM Drop</span>
+          <span className="text-brand-400">•</span>
+          <span className="font-bold text-white">Direct from Koley & Mechua</span>
+          <span className="text-brand-400">•</span>
         </div>
       </div>
 
@@ -184,8 +224,8 @@ export const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Blinkit-Style Quick Sub-Navigation Strip (Zero Clutter, 100% Reachable) */}
-        <div className="border-t border-gray-100 bg-gray-50/90 px-3 sm:px-6 lg:px-8 py-1.5 sm:py-2 overflow-x-auto no-scrollbar w-full max-w-full">
+        {/* Blinkit-Style Quick Sub-Navigation Strip (Desktop Only, Hidden on Mobile) */}
+        <div className="hidden md:block border-t border-gray-100 bg-gray-50/90 px-3 sm:px-6 lg:px-8 py-1.5 sm:py-2 overflow-x-auto no-scrollbar w-full max-w-full">
           <div className="w-full flex items-center justify-between gap-3 text-xs font-bold text-gray-700 whitespace-nowrap">
             <div className="flex items-center gap-1.5 sm:gap-3 overflow-x-auto no-scrollbar">
               <Link

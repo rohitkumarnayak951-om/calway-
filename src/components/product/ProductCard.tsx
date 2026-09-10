@@ -149,33 +149,33 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, featured = fa
               <button
                 type="button"
                 onClick={handleAdd}
-                className="h-8 sm:h-9 px-2.5 sm:px-4 rounded-xl font-black text-xs sm:text-sm bg-emerald-50 hover:bg-accent-400 text-brand-800 hover:text-brand-950 border border-brand-300 hover:border-accent-500 flex items-center justify-center gap-1 shadow-2xs hover:scale-105 active:scale-95 transition-all duration-150"
+                className="h-8 sm:h-9 min-w-[62px] px-3 sm:px-4 rounded-xl font-black text-xs sm:text-sm bg-emerald-50 hover:bg-accent-400 text-brand-800 hover:text-brand-950 border border-brand-300 hover:border-accent-500 flex items-center justify-center gap-1 shadow-2xs hover:scale-105 active:scale-95 transition-all duration-150"
               >
-                <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-700" />
+                <Plus className="w-3.5 h-3.5 text-brand-700" />
                 <span>ADD</span>
               </button>
             ) : (
-              <div className={`h-8 sm:h-9 px-1.5 sm:px-2 bg-brand-600 text-white rounded-xl flex items-center justify-between gap-1 sm:gap-1.5 shadow-sm transition-all ${
+              <div className={`h-8 sm:h-9 px-1 sm:px-1.5 bg-brand-600 text-white rounded-xl flex items-center justify-between gap-0.5 sm:gap-1 shadow-sm transition-all ${
                 justAdded ? 'animate-bounce-short scale-105' : ''
               }`}>
                 <button
                   type="button"
                   onClick={handleDecrement}
-                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-brand-700/80 hover:bg-brand-800 flex items-center justify-center text-white transition-colors"
+                  className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-lg bg-brand-700/80 hover:bg-brand-800 flex items-center justify-center text-white transition-colors active:scale-90"
                   aria-label="Decrease quantity"
                 >
-                  <Minus className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <Minus className="w-3.5 h-3.5" />
                 </button>
-                <span className="font-black text-xs sm:text-sm px-1 min-w-[14px] sm:min-w-[18px] text-center">
+                <span className="font-black text-xs sm:text-sm px-1 min-w-[16px] sm:min-w-[18px] text-center">
                   {quantity}
                 </span>
                 <button
                   type="button"
                   onClick={handleIncrement}
-                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-brand-700/80 hover:bg-brand-800 flex items-center justify-center text-white transition-colors"
+                  className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-lg bg-brand-700/80 hover:bg-brand-800 flex items-center justify-center text-white transition-colors active:scale-90"
                   aria-label="Increase quantity"
                 >
-                  <Plus className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <Plus className="w-3.5 h-3.5" />
                 </button>
               </div>
             )}

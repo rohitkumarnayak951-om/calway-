@@ -72,12 +72,12 @@ export const MandiSpecials: React.FC<MandiSpecialsProps> = ({ products }) => {
         {/* Horizontal Carousel */}
         <div
           ref={scrollContainerRef}
-          className="flex gap-3 sm:gap-6 overflow-x-auto no-scrollbar pb-3 pt-1 w-full max-w-full scroll-smooth snap-x snap-mandatory"
+          className="flex gap-2.5 sm:gap-6 overflow-x-auto no-scrollbar pb-3 pt-1 w-full max-w-full scroll-smooth snap-x snap-mandatory"
         >
           {specials.map((product) => (
             <div
               key={product.id}
-              className="w-[185px] sm:w-[260px] md:w-[280px] shrink-0 snap-start"
+              className="w-[165px] sm:w-[250px] md:w-[280px] shrink-0 snap-start"
             >
               <ProductCard product={product} featured={true} />
             </div>

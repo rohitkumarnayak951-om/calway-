@@ -383,7 +383,7 @@ function CheckoutContent() {
         </div>
 
         {/* Right Col: Order Summary & Place Order Button */}
-        <div className="lg:col-span-4 space-y-6 sticky top-28">
+        <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-28">
           
           <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm space-y-4">
             <h3 className="text-lg sm:text-xl font-black text-gray-900 pb-3 border-b border-gray-100 flex items-center justify-between">

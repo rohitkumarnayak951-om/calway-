@@ -11,6 +11,7 @@ import { Testimonials } from '@/components/home/Testimonials';
 import { SubscriptionTeaser } from '@/components/home/SubscriptionTeaser';
 import { ProductGrid } from '@/components/product/ProductGrid';
 import { productService } from '@/services/productService';
+import productsData from '@/data/products.json';
 import { Product } from '@/types';
 import { 
   ArrowRight, 
@@ -19,14 +20,13 @@ import {
 } from 'lucide-react';
 
 export default function HomePage() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(productsData as Product[]);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'popular' | 'price-low' | 'price-high' | 'freshness'>('popular');
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     async function loadData() {
-      setIsLoading(true);
       const data = await productService.getProducts();
       setProducts(data);
       setIsLoading(false);

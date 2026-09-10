@@ -118,10 +118,10 @@ export const HeroBanner: React.FC = () => {
               </div>
 
               {/* Action Buttons & Live Promise */}
-              <div className="pt-1 sm:pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3.5">
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3.5 w-full">
                 <Link
                   href={slide.ctaLink}
-                  className="px-5 sm:px-7 py-3 sm:py-4 bg-accent-400 hover:bg-accent-300 text-brand-950 font-black text-xs sm:text-base rounded-xl sm:rounded-2xl shadow-lg shadow-accent-500/25 flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95 text-center"
+                  className="w-full sm:w-auto px-5 sm:px-7 py-3.5 sm:py-4 min-h-[48px] bg-accent-400 hover:bg-accent-300 text-brand-950 font-black text-sm sm:text-base rounded-xl sm:rounded-2xl shadow-lg shadow-accent-500/25 flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95 text-center"
                 >
                   <span>{slide.ctaText}</span>
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -129,7 +129,7 @@ export const HeroBanner: React.FC = () => {
 
                 <Link
                   href="/subscriptions"
-                  className="px-5 sm:px-6 py-2.5 sm:py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold text-xs sm:text-base rounded-xl sm:rounded-2xl border border-white/20 flex items-center justify-center transition-colors text-center"
+                  className="w-full sm:w-auto px-5 sm:px-6 py-3.5 sm:py-4 min-h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-bold text-sm sm:text-base rounded-xl sm:rounded-2xl border border-white/20 flex items-center justify-center transition-colors text-center"
                 >
                   Subscribe & Save 18%
                 </Link>
@@ -145,7 +145,7 @@ export const HeroBanner: React.FC = () => {
             </div>
 
             {/* Right Supporting Image Showcase */}
-            <div className="lg:col-span-5 relative mt-3 lg:mt-0">
+            <div className="lg:col-span-5 relative mt-2 lg:mt-0">
               <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-square w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 sm:border-4 border-white/10">
                 <Image
                   src={slide.image}
@@ -181,13 +181,13 @@ export const HeroBanner: React.FC = () => {
           </div>
 
           {/* Slide Navigation Controls */}
-          <div className="absolute bottom-4 right-6 hidden sm:flex items-center gap-2 z-20">
+          <div className="flex items-center justify-center sm:justify-end gap-2 pb-3 sm:pb-0 sm:absolute sm:bottom-4 sm:right-6 z-20">
             <button
               onClick={() => setCurrentSlide((prev) => (prev - 1 + promoSlides.length) % promoSlides.length)}
-              className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-colors"
+              className="p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-colors"
               aria-label="Previous slide"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
             <div className="flex gap-1.5 px-2">
               {promoSlides.map((_, idx) => (
@@ -203,10 +203,10 @@ export const HeroBanner: React.FC = () => {
             </div>
             <button
               onClick={() => setCurrentSlide((prev) => (prev + 1) % promoSlides.length)}
-              className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-colors"
+              className="p-1.5 sm:p-2 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-colors"
               aria-label="Next slide"
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
           </div>
 

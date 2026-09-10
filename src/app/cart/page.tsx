@@ -306,7 +306,7 @@ export default function CartPage() {
         </div>
 
         {/* Right Col: Bill Summary, Promo Code, Checkout CTA */}
-        <div className="lg:col-span-4 space-y-6 sticky top-28">
+        <div className="lg:col-span-4 space-y-5 sm:space-y-6 lg:sticky lg:top-28">
           
           {/* Promo Code Box */}
           <div className="bg-white rounded-3xl p-5 sm:p-6 border border-gray-100 shadow-sm space-y-3.5">

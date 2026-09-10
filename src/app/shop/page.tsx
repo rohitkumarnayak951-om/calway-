@@ -4,6 +4,8 @@ import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Product, Category } from '@/types';
 import { productService } from '@/services/productService';
+import productsData from '@/data/products.json';
+import categoriesData from '@/data/categories.json';
 import { ProductGrid } from '@/components/product/ProductGrid';
 import { 
   SlidersHorizontal, 
@@ -19,9 +21,9 @@ function ShopContent() {
   const searchParams = useSearchParams();
   const catParam = searchParams.get('cat') || 'all';
 
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [products, setProducts] = useState<Product[]>(productsData as Product[]);
+  const [categories, setCategories] = useState<Category[]>(categoriesData as Category[]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Filters
   const [selectedCategory, setSelectedCategory] = useState<string>(catParam);
@@ -33,7 +35,6 @@ function ShopContent() {
 
   useEffect(() => {
     async function loadData() {
-      setIsLoading(true);
       const [prods, cats] = await Promise.all([
         productService.getProducts(),
         productService.getCategories(),

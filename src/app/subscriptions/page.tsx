@@ -176,47 +176,47 @@ export default function SubscriptionsPage() {
       </div>
 
       {/* What Comes in the Basket Section */}
-      <div className="bg-white rounded-3xl p-8 sm:p-12 border border-gray-100 shadow-sm">
-        <div className="text-center max-w-2xl mx-auto mb-10">
+      <div className="bg-white rounded-3xl p-4.5 sm:p-10 lg:p-12 border border-gray-100 shadow-sm">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
           <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-brand-700 bg-brand-100 px-3.5 py-1.5 rounded-xl">
             🧺 Typical Basket Composition
           </span>
-          <h2 className="text-2xl sm:text-4xl font-black text-gray-900 mt-3">
+          <h2 className="text-xl sm:text-4xl font-black text-gray-900 mt-2.5 sm:mt-3">
             What will be inside your dawn basket?
           </h2>
-          <p className="text-sm sm:text-base text-gray-600 mt-2 font-medium">
+          <p className="text-xs sm:text-base text-gray-600 mt-2 font-medium">
             Carefully balanced everyday nutrition, adapted to the morning harvest and seasonal Bengal arrivals.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-6 bg-brand-50/50 rounded-2xl border border-brand-100 space-y-2.5">
-            <span className="text-3xl">🥬</span>
-            <h4 className="font-black text-base sm:text-lg text-gray-900">1. Fresh Shaak (Greens)</h4>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="p-4.5 sm:p-6 bg-brand-50/50 rounded-2xl border border-brand-100 space-y-2">
+            <span className="text-2xl sm:text-3xl">🥬</span>
+            <h4 className="font-black text-sm sm:text-lg text-gray-900">1. Fresh Shaak (Greens)</h4>
             <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-normal">
               Rotated daily: Palak Shaak, Lal Shaak, Pui Shaak, Methi, or fresh Shorshe Shaak in winter.
             </p>
           </div>
 
-          <div className="p-6 bg-amber-50/50 rounded-2xl border border-amber-100 space-y-2.5">
-            <span className="text-3xl">🥔</span>
-            <h4 className="font-black text-base sm:text-lg text-gray-900">2. Kitchen Staples</h4>
+          <div className="p-4.5 sm:p-6 bg-amber-50/50 rounded-2xl border border-amber-100 space-y-2">
+            <span className="text-2xl sm:text-3xl">🥔</span>
+            <h4 className="font-black text-sm sm:text-lg text-gray-900">2. Kitchen Staples</h4>
             <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-normal">
               Chandramukhi / Jyoti potatoes, Nashik pink onions, juicy desi tomatoes, and hill ginger.
             </p>
           </div>
 
-          <div className="p-6 bg-emerald-50/50 rounded-2xl border border-emerald-100 space-y-2.5">
-            <span className="text-3xl">🍆</span>
-            <h4 className="font-black text-base sm:text-lg text-gray-900">3. Daily Curry Veggies</h4>
+          <div className="p-4.5 sm:p-6 bg-emerald-50/50 rounded-2xl border border-emerald-100 space-y-2">
+            <span className="text-2xl sm:text-3xl">🍆</span>
+            <h4 className="font-black text-sm sm:text-lg text-gray-900">3. Daily Curry Veggies</h4>
             <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-normal">
               Tender Potol (pointed gourd), Jhinge (ridge gourd), Muktakeshi Begun, Kanchakola, or Gourd.
             </p>
           </div>
 
-          <div className="p-6 bg-teal-50/50 rounded-2xl border border-teal-100 space-y-2.5">
-            <span className="text-3xl">🌶️</span>
-            <h4 className="font-black text-base sm:text-lg text-gray-900">4. Free Aromatic Pouch</h4>
+          <div className="p-4.5 sm:p-6 bg-teal-50/50 rounded-2xl border border-teal-100 space-y-2">
+            <span className="text-2xl sm:text-3xl">🌶️</span>
+            <h4 className="font-black text-sm sm:text-lg text-gray-900">4. Free Aromatic Pouch</h4>
             <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-normal">
               Every drop includes free fresh Kacha Lanka (green chili), fragrant Dhone Pata, and lemon.
             </p>
@@ -225,17 +225,17 @@ export default function SubscriptionsPage() {
       </div>
 
       {/* Subscription FAQ Accordion */}
-      <div className="max-w-3xl mx-auto space-y-6">
+      <div className="max-w-3xl mx-auto space-y-5 sm:space-y-6">
         <div className="text-center">
-          <h2 className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-black text-gray-900 tracking-tight">
             Frequently Asked Questions
           </h2>
-          <p className="text-sm sm:text-base text-gray-600 mt-2 font-medium">
+          <p className="text-xs sm:text-base text-gray-600 mt-1.5 sm:mt-2 font-medium">
             Everything you need to know about subscribing to Calway in Kolkata
           </p>
         </div>
 
-        <div className="divide-y divide-gray-100 bg-white rounded-3xl border border-gray-100 p-6 sm:p-9 shadow-sm">
+        <div className="divide-y divide-gray-100 bg-white rounded-3xl border border-gray-100 p-4.5 sm:p-9 shadow-sm">
           {faqs.map((faq, idx) => {
             const isOpen = openFaqIndex === idx;
             return (
