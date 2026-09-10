@@ -4,7 +4,9 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { HeroBanner } from '@/components/home/HeroBanner';
 import { HowItWorks } from '@/components/home/HowItWorks';
-import { CategoryRow } from '@/components/home/CategoryRow';
+import { CategoryTabRow } from '@/components/home/CategoryTabRow';
+import { FeaturedPromoRow } from '@/components/home/FeaturedPromoRow';
+import { PreviouslyBoughtRow } from '@/components/home/PreviouslyBoughtRow';
 import { MandiSpecials } from '@/components/home/MandiSpecials';
 import { TrustSection } from '@/components/home/TrustSection';
 import { Testimonials } from '@/components/home/Testimonials';
@@ -58,25 +60,31 @@ export default function HomePage() {
   }, [products, selectedCategory, sortBy]);
 
   return (
-    <div className="space-y-3 sm:space-y-8 pb-28 sm:pb-16 w-full max-w-full overflow-hidden">
+    <div className="space-y-2 sm:space-y-8 pb-28 sm:pb-16 w-full max-w-full overflow-hidden">
       
-      {/* 1. Hero Promotional Banner Carousel with Dawn Countdown */}
-      <HeroBanner />
-
-      {/* 2. How it works 4-step strip */}
-      <HowItWorks />
-
-      {/* 3. Horizontally Scrollable Category Grid with Quick Filter */}
-      <CategoryRow
+      {/* 4. Horizontal Category Tab Row (Directly below search bar) */}
+      <CategoryTabRow
         selectedCategory={selectedCategory}
         onSelectCategory={(slug) => setSelectedCategory(slug)}
       />
 
-      {/* 4. Mandi Specials Horizontal Carousel */}
+      {/* 5. Featured / Promo Card Row (Square 1:1 Aspect Cards with Ribbons) */}
+      <FeaturedPromoRow />
+
+      {/* 6. "Previously Bought" / Reorder Horizontal Row */}
+      {products.length > 0 && <PreviouslyBoughtRow products={products} />}
+
+      {/* Desktop-Only Promotional Hero & Journey (>=md) */}
+      <div className="hidden md:block space-y-6">
+        <HeroBanner />
+        <HowItWorks />
+      </div>
+
+      {/* Mandi Specials Horizontal Carousel */}
       {products.length > 0 && <MandiSpecials products={products} />}
 
-      {/* 5. Full Product Catalog with Filter & Sort Controls */}
-      <section className="py-6 sm:py-8 bg-white" id="catalog">
+      {/* Full Product Catalog with Filter & Sort Controls */}
+      <section className="py-4 sm:py-8 bg-white" id="catalog">
         <div className="w-full px-3 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 mx-auto">
           
           {/* Controls Bar */}
