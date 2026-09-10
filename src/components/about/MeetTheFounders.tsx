@@ -10,6 +10,7 @@ interface Founder {
   imageSrc: string;
   initials: string;
   bio: string;
+  objectPosition?: string;
   linkedinUrl?: string;
   emailUrl?: string;
 }
@@ -21,6 +22,7 @@ const FOUNDERS: Founder[] = [
     imageSrc: '/founders/rohit-kumar-nayak.jpg',
     initials: 'RN',
     bio: "Co-founded Calway to bring Kolkata's freshest mandi produce straight to family kitchens every morning. Passionate about eliminating cold-storage delays and reconnecting our city with seasonal Bengal harvests.",
+    objectPosition: 'center 18%',
     linkedinUrl: '#',
     emailUrl: 'mailto:rohit@calway.in',
   },
@@ -30,6 +32,7 @@ const FOUNDERS: Founder[] = [
     imageSrc: '/founders/abhimanyu-singh.jpg',
     initials: 'AS',
     bio: "Co-founded Calway to build a transparent dawn supply chain directly from regional farmers and Kolkata aratdars. Dedicated to bringing zero-plastic, dew-fresh morning deliveries to every neighborhood.",
+    objectPosition: 'center 12%',
     linkedinUrl: '#',
     emailUrl: 'mailto:abhimanyu@calway.in',
   },
@@ -39,7 +42,8 @@ const FounderAvatar: React.FC<{
   src: string;
   name: string;
   initials: string;
-}> = ({ src, name, initials }) => {
+  objectPosition?: string;
+}> = ({ src, name, initials, objectPosition = 'center top' }) => {
   const [imgError, setImgError] = useState(false);
 
   return (
@@ -49,13 +53,14 @@ const FounderAvatar: React.FC<{
         {initials}
       </div>
 
-      {/* Real photo from /public/founders/, gracefully cropped with object-fit: cover, top-centered */}
+      {/* Real photo from /public/founders/, gracefully cropped with object-fit: cover */}
       {!imgError && (
         <Image
           src={src}
           alt={name}
           fill
-          className="object-cover object-top z-10"
+          className="object-cover z-10"
+          style={{ objectPosition }}
           onError={() => setImgError(true)}
           sizes="(max-width: 640px) 120px, 160px"
         />
@@ -92,6 +97,7 @@ export const MeetTheFounders: React.FC = () => {
               src={founder.imageSrc}
               name={founder.name}
               initials={founder.initials}
+              objectPosition={founder.objectPosition}
             />
 
             {/* Founder Full Name */}
