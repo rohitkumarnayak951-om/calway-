@@ -7,6 +7,7 @@ import {
   ShieldCheck, 
   Clock
 } from 'lucide-react';
+import { MeetTheFounders } from '@/components/about/MeetTheFounders';
 
 export default function AboutPage() {
   return (
@@ -72,6 +73,9 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
+
+      {/* Meet the Founders Section */}
+      <MeetTheFounders />
 
       {/* Sourcing Process Walkthrough */}
       <div className="space-y-8" id="mandi-process">
