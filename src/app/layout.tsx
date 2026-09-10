@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { LocationProvider } from "@/context/LocationContext";
 import { Header } from "@/components/common/Header";
@@ -29,10 +30,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="w-full max-w-full overflow-x-hidden">
       <body className="bg-[#f8faf8] text-[#0f291e] min-h-screen flex flex-col antialiased selection:bg-brand-200 selection:text-brand-900 w-full max-w-full overflow-x-hidden">
-        <LocationProvider>
-          <CartProvider>
-            {/* Global Location Selection Modal */}
-            <LocationModal />
+        <AuthProvider>
+          <LocationProvider>
+            <CartProvider>
+              {/* Global Location Selection Modal */}
+              <LocationModal />
 
             {/* Header */}
             <Header />
@@ -52,7 +54,8 @@ export default function RootLayout({
             <Footer />
           </CartProvider>
         </LocationProvider>
-      </body>
+      </AuthProvider>
+    </body>
     </html>
   );
 }

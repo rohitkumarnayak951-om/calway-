@@ -1,11 +1,14 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useLocation } from '@/context/LocationContext';
+import { useAuth } from '@/context/AuthContext';
 import { deliverySlots } from '@/services/productService';
+import { orderService } from '@/services/orderService';
+import { addressService, CustomerAddress } from '@/services/addressService';
 import locationsData from '@/data/locations.json';
 import { KolkataLocality } from '@/types';
 import confetti from 'canvas-confetti';
@@ -13,9 +16,11 @@ import {
   MapPin, 
   Clock, 
   CreditCard, 
-  CheckCircle2, 
   ArrowRight,
-  ArrowLeft
+  ArrowLeft,
+  User,
+  Plus,
+  AlertCircle
 } from 'lucide-react';
 
 const locations = locationsData as KolkataLocality[];
@@ -28,15 +33,48 @@ function CheckoutContent() {
 
   const { items, subtotal, promoDiscount, deliveryFee, grandTotal, clearCart } = useCart();
   const { selectedLocation } = useLocation();
+  const { user, customer, openAuthModal } = useAuth();
+
+  // Saved Addresses State
+  const [savedAddresses, setSavedAddresses] = useState<CustomerAddress[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState<string>('new');
+  const [addressLabel, setAddressLabel] = useState<'Home' | 'Work' | 'Other'>('Home');
 
   // Address Form State
-  const [fullName, setFullName] = useState('Ananya Sen');
-  const [phone, setPhone] = useState('9830123456');
-  const [flatNo, setFlatNo] = useState('Flat 4B, Greenfield Residency');
-  const [street, setStreet] = useState('Street 12, Block BD');
+  const [fullName, setFullName] = useState(customer?.fullName || '');
+  const [phone, setPhone] = useState(customer?.phoneNumber || '');
+  const [flatNo, setFlatNo] = useState('');
+  const [street, setStreet] = useState('');
   const [selectedLocality, setSelectedLocality] = useState(selectedLocation.name);
   const [pincode, setPincode] = useState(selectedLocation.pincode);
-  const [landmark, setLandmark] = useState('Near Swimming Pool / Central Park');
+  const [landmark, setLandmark] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // Sync user details when auth state updates
+  useEffect(() => {
+    if (customer?.fullName && !fullName) {
+      setFullName(customer.fullName);
+    }
+    if (customer?.phoneNumber && !phone) {
+      setPhone(customer.phoneNumber);
+    }
+  }, [customer, fullName, phone]);
+
+  // Load saved addresses when user is logged in
+  useEffect(() => {
+    if (user) {
+      addressService.getAddresses(user.id).then((addresses) => {
+        setSavedAddresses(addresses);
+        const defaultAddr = addresses.find((a) => a.is_default) || addresses[0];
+        if (defaultAddr) {
+          setSelectedAddressId(defaultAddr.id);
+          setAddressLabel((defaultAddr.label as 'Home' | 'Work' | 'Other') || 'Home');
+          setSelectedLocality(defaultAddr.area);
+          setPincode(defaultAddr.pincode);
+        }
+      });
+    }
+  }, [user]);
 
   // Slot
   const selectedSlot = deliverySlots.find((s) => s.id === slotParam) || deliverySlots[0];
@@ -45,21 +83,85 @@ function CheckoutContent() {
   const [paymentMethod, setPaymentMethod] = useState<'upi' | 'card' | 'cod'>('upi');
   const [selectedUpiApp, setSelectedUpiApp] = useState<'gpay' | 'phonepe' | 'paytm'>('gpay');
 
-  // Order Success Modal State
+  // Submitting state
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [orderPlaced, setOrderPlaced] = useState(false);
-  const [generatedOrderId, setGeneratedOrderId] = useState('');
 
-  const handlePlaceOrder = (e: React.FormEvent) => {
+  const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      openAuthModal();
+      return;
+    }
+
     setIsSubmitting(true);
+    setErrorMessage(null);
 
-    const randomId = `CAL-${Math.floor(100000 + Math.random() * 900000)}`;
-    setGeneratedOrderId(randomId);
+    try {
+      let finalAddressId = selectedAddressId !== 'new' ? selectedAddressId : null;
+      let addressSnapshot: Record<string, unknown> | null = null;
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setOrderPlaced(true);
+      if (selectedAddressId !== 'new') {
+        const addr = savedAddresses.find((a) => a.id === selectedAddressId);
+        if (addr) {
+          addressSnapshot = {
+            fullName: fullName || customer?.fullName || 'Customer',
+            phone: phone || customer?.phoneNumber || '',
+            fullAddress: addr.full_address,
+            area: addr.area,
+            city: addr.city,
+            pincode: addr.pincode,
+            label: addr.label,
+          };
+        }
+      }
+
+      if (!addressSnapshot) {
+        if (!flatNo || !street) {
+          throw new Error('Please enter complete apartment / street address.');
+        }
+        const fullAddrStr = `${flatNo}, ${street}${landmark ? ` (Near ${landmark})` : ''}`;
+        addressSnapshot = {
+          fullName: fullName || customer?.fullName || 'Customer',
+          phone: phone || customer?.phoneNumber || '',
+          fullAddress: fullAddrStr,
+          area: selectedLocality,
+          city: 'Kolkata',
+          pincode,
+          label: addressLabel,
+        };
+
+        // Save new address to customer profile
+        const { address: newAddr } = await addressService.addAddress({
+          customer_id: user.id,
+          label: addressLabel,
+          full_address: fullAddrStr,
+          area: selectedLocality,
+          city: 'Kolkata',
+          pincode,
+          is_default: savedAddresses.length === 0,
+        });
+        if (newAddr) {
+          finalAddressId = newAddr.id;
+        }
+      }
+
+      // Create Order in Supabase
+      const { order, error } = await orderService.createOrder({
+        customerId: user.id,
+        addressId: finalAddressId,
+        deliverySlot: selectedSlot.timeWindow,
+        subtotal,
+        discount: promoDiscount,
+        total: grandTotal,
+        items,
+        addressSnapshot,
+      });
+
+      if (error || !order) {
+        throw new Error(error?.message || 'Could not place order. Please try again.');
+      }
+
+      clearCart();
 
       // Trigger celebratory confetti
       try {
@@ -72,10 +174,17 @@ function CheckoutContent() {
       } catch (err) {
         console.log('Confetti not available', err);
       }
-    }, 1200);
+
+      router.push(`/order-confirmation/${order.id}`);
+    } catch (err: unknown) {
+      console.error('Order placement failed:', err);
+      const msg = err instanceof Error ? err.message : 'Failed to place order. Please try again.';
+      setErrorMessage(msg);
+      setIsSubmitting(false);
+    }
   };
 
-  if (items.length === 0 && !orderPlaced) {
+  if (items.length === 0) {
     return (
       <div className="max-w-xl mx-auto px-4 py-20 text-center">
         <h2 className="text-xl font-bold text-gray-900">Your cart is empty</h2>
@@ -127,6 +236,100 @@ function CheckoutContent() {
                 Dawn Sourced Hub
               </span>
             </div>
+
+            {/* Auth Banner if not signed in */}
+            {!user && (
+              <div className="bg-emerald-50/80 border border-emerald-200 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-emerald-950">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-200/70 text-emerald-800 flex items-center justify-center font-bold text-sm shrink-0">
+                    <User className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-xs sm:text-sm">Sign in to save address & track dawn delivery</p>
+                    <p className="text-[11px] text-emerald-800 font-medium">Link your phone or email for morning WhatsApp updates</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={openAuthModal}
+                  className="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm rounded-xl transition-all shadow-xs shrink-0"
+                >
+                  Sign In / Sign Up
+                </button>
+              </div>
+            )}
+
+            {/* Saved Addresses List (if any) */}
+            {user && savedAddresses.length > 0 && (
+              <div className="space-y-3">
+                <label className="block text-xs font-black text-gray-700 uppercase tracking-wider">
+                  Select Delivery Address
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {savedAddresses.map((addr) => (
+                    <div
+                      key={addr.id}
+                      onClick={() => setSelectedAddressId(addr.id)}
+                      className={`p-3.5 rounded-2xl border cursor-pointer transition-all ${
+                        selectedAddressId === addr.id
+                          ? 'border-brand-600 bg-brand-50/40 ring-2 ring-brand-400/20'
+                          : 'border-gray-200 bg-gray-50/50 hover:border-gray-300'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-black text-brand-900 px-2 py-0.5 bg-brand-100/70 rounded-md">
+                          {addr.label}
+                        </span>
+                        {addr.is_default && (
+                          <span className="text-[10px] font-bold text-gray-500">Default</span>
+                        )}
+                      </div>
+                      <p className="text-xs font-bold text-gray-800 mt-2 truncate">
+                        {addr.full_address}
+                      </p>
+                      <p className="text-[11px] text-gray-500 font-medium">
+                        {addr.area}, Kolkata - {addr.pincode}
+                      </p>
+                    </div>
+                  ))}
+
+                  <div
+                    onClick={() => setSelectedAddressId('new')}
+                    className={`p-3.5 rounded-2xl border-2 border-dashed cursor-pointer transition-all flex items-center justify-center gap-2 ${
+                      selectedAddressId === 'new'
+                        ? 'border-brand-600 bg-brand-50/30 text-brand-700'
+                        : 'border-gray-200 text-gray-500 hover:border-gray-400'
+                    }`}
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span className="text-xs font-black">Add New Address</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Form Fields for New Address */}
+            {(selectedAddressId === 'new' || savedAddresses.length === 0) && (
+              <div className="space-y-4 pt-2">
+                {user && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-gray-600">Address Label:</span>
+                    {(['Home', 'Work', 'Other'] as const).map((lbl) => (
+                      <button
+                        key={lbl}
+                        type="button"
+                        onClick={() => setAddressLabel(lbl)}
+                        className={`px-3 py-1 rounded-lg text-xs font-bold transition-colors ${
+                          addressLabel === lbl
+                            ? 'bg-brand-600 text-white shadow-2xs'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        }`}
+                      >
+                        {lbl}
+                      </button>
+                    ))}
+                  </div>
+                )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
@@ -236,6 +439,8 @@ function CheckoutContent() {
               </div>
             </div>
           </div>
+        )}
+      </div>
 
           {/* 2. Morning Delivery Slot Confirmation */}
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-sm space-y-3.5">
@@ -432,6 +637,14 @@ function CheckoutContent() {
               </div>
             </div>
 
+            {/* Error Message Alert */}
+            {errorMessage && (
+              <div className="p-3.5 bg-red-50 border border-red-200 rounded-2xl flex items-start gap-2.5 text-red-800 text-xs font-semibold">
+                <AlertCircle className="w-4 h-4 shrink-0 text-red-600 mt-0.5" />
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
             {/* Place Order CTA */}
             <button
               type="submit"
@@ -459,95 +672,6 @@ function CheckoutContent() {
         </div>
 
       </form>
-
-      {/* Interactive Order Confirmation Modal */}
-      {orderPlaced && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-300">
-          <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl p-6 sm:p-9 text-center border border-brand-100 animate-in zoom-in-95">
-            
-            {/* Animated Checkmark Circle */}
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center mx-auto mb-4 animate-bounce-short">
-              <CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12 text-brand-600" />
-            </div>
-
-            <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-accent-700 bg-accent-100 px-3.5 py-1.5 rounded-full">
-              Order Confirmed For Dawn Delivery
-            </span>
-
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mt-3 tracking-tight">
-              You&apos;re Getting Mandi-Fresh Veggies!
-            </h3>
-
-            <p className="text-sm sm:text-base text-gray-600 mt-2 max-w-sm mx-auto">
-              We received your morning order <strong className="text-gray-900 font-black">{generatedOrderId}</strong>. Sourcing will begin at dawn.
-            </p>
-
-            {/* Delivery Details Card */}
-            <div className="my-6 p-5 sm:p-6 bg-brand-50 rounded-2xl border border-brand-100 text-left space-y-3 text-xs sm:text-sm text-brand-950">
-              <div className="flex justify-between font-bold">
-                <span className="text-brand-700">Delivery Slot:</span>
-                <span className="font-black">Tomorrow, {selectedSlot.timeWindow}</span>
-              </div>
-              <div className="flex justify-between font-bold">
-                <span className="text-brand-700">Address:</span>
-                <span className="truncate max-w-[200px] font-black">{flatNo}, {selectedLocality}</span>
-              </div>
-              <div className="flex justify-between font-bold">
-                <span className="text-brand-700">Total Paid:</span>
-                <span className="font-black">₹{grandTotal} ({paymentMethod.toUpperCase()})</span>
-              </div>
-            </div>
-
-            {/* Mandi Sourcing Timeline Visualization */}
-            <div className="my-6 text-left border-t border-gray-100 pt-5">
-              <h4 className="text-xs sm:text-sm font-black uppercase tracking-wider text-gray-500 mb-3.5">
-                Live Dawn Fulfillment Timeline
-              </h4>
-              <div className="space-y-3 text-xs sm:text-sm">
-                <div className="flex items-center gap-3 font-bold text-brand-900">
-                  <span className="w-3 h-3 rounded-full bg-emerald-500 shrink-0"></span>
-                  <span className="font-black">Order Confirmed & Logged for Dawn Run</span>
-                </div>
-                <div className="flex items-center gap-3 text-gray-600 font-medium">
-                  <span className="w-3 h-3 rounded-full bg-gray-300 shrink-0"></span>
-                  <span>03:30 AM: Hand-picking at Sealdah Koley & Mechua</span>
-                </div>
-                <div className="flex items-center gap-3 text-gray-600 font-medium">
-                  <span className="w-3 h-3 rounded-full bg-gray-300 shrink-0"></span>
-                  <span>04:45 AM: Hand-sorting, weighing & ozone wash</span>
-                </div>
-                <div className="flex items-center gap-3 text-gray-600 font-medium">
-                  <span className="w-3 h-3 rounded-full bg-gray-300 shrink-0"></span>
-                  <span>06:15 AM: Dispatched to your doorstep</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="pt-3 flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={() => {
-                  clearCart();
-                  router.push('/');
-                }}
-                className="flex-1 py-4 bg-brand-600 hover:bg-brand-700 text-white font-black text-sm sm:text-base rounded-2xl shadow-md transition-colors"
-              >
-                Back to Home
-              </button>
-              <button
-                onClick={() => {
-                  clearCart();
-                  router.push('/shop');
-                }}
-                className="flex-1 py-4 bg-gray-100 hover:bg-gray-200 text-gray-800 font-black text-sm sm:text-base rounded-2xl transition-colors"
-              >
-                Explore More Produce
-              </button>
-            </div>
-
-          </div>
-        </div>
-      )}
 
     </div>
   );
